@@ -1,0 +1,221 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-04-28T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "wrk_movie_api",
+      "parentId": null,
+      "modified": 1680000000000,
+      "created": 1680000000000,
+      "name": "Movie API",
+      "description": "Full CRUD for Movies, Genres, Actors, Directors",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_movie_api",
+      "parentId": "wrk_movie_api",
+      "modified": 1680000000000,
+      "created": 1680000000000,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3000/api"
+      },
+      "_type": "environment"
+    },
+    {
+      "_id": "req_get_movies",
+      "parentId": "wrk_movie_api",
+      "method": "GET",
+      "url": "{{ base_url }}/movies",
+      "name": "Get All Movies",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_movie_by_id",
+      "parentId": "wrk_movie_api",
+      "method": "GET",
+      "url": "{{ base_url }}/movies/1",
+      "name": "Get Movie by ID",
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_movie",
+      "parentId": "wrk_movie_api",
+      "method": "POST",
+      "url": "{{ base_url }}/movies",
+      "name": "Create Movie",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"title\": \"New Movie\", \"releaseYear\": 2025, \"directorId\": 1, \"genreIds\": [1], \"actorIds\": [1] }"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_movie",
+      "parentId": "wrk_movie_api",
+      "method": "PUT",
+      "url": "{{ base_url }}/movies/1",
+      "name": "Update Movie",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"title\": \"Updated Movie\", \"releaseYear\": 2026, \"directorId\": 2 }"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_delete_movie",
+      "parentId": "wrk_movie_api",
+      "method": "DELETE",
+      "url": "{{ base_url }}/movies/1",
+      "name": "Delete Movie",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_genres",
+      "parentId": "wrk_movie_api",
+      "method": "GET",
+      "url": "{{ base_url }}/genres",
+      "name": "Get All Genres",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_genre_by_id",
+      "parentId": "wrk_movie_api",
+      "method": "GET",
+      "url": "{{ base_url }}/genres/1",
+      "name": "Get Genre by ID",
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_genre",
+      "parentId": "wrk_movie_api",
+      "method": "POST",
+      "url": "{{ base_url }}/genres",
+      "name": "Create Genre",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"name\": \"Thriller\" }"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_genre",
+      "parentId": "wrk_movie_api",
+      "method": "PUT",
+      "url": "{{ base_url }}/genres/1",
+      "name": "Update Genre",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"name\": \"Updated Genre\" }"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_delete_genre",
+      "parentId": "wrk_movie_api",
+      "method": "DELETE",
+      "url": "{{ base_url }}/genres/1",
+      "name": "Delete Genre",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_actors",
+      "parentId": "wrk_movie_api",
+      "method": "GET",
+      "url": "{{ base_url }}/actors",
+      "name": "Get All Actors",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_actor_by_id",
+      "parentId": "wrk_movie_api",
+      "method": "GET",
+      "url": "{{ base_url }}/actors/1",
+      "name": "Get Actor by ID",
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_actor",
+      "parentId": "wrk_movie_api",
+      "method": "POST",
+      "url": "{{ base_url }}/actors",
+      "name": "Create Actor",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"name\": \"New Actor\", \"birthYear\": 1995 }"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_actor",
+      "parentId": "wrk_movie_api",
+      "method": "PUT",
+      "url": "{{ base_url }}/actors/1",
+      "name": "Update Actor",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"name\": \"Updated Actor\", \"birthYear\": 1990 }"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_delete_actor",
+      "parentId": "wrk_movie_api",
+      "method": "DELETE",
+      "url": "{{ base_url }}/actors/1",
+      "name": "Delete Actor",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_directors",
+      "parentId": "wrk_movie_api",
+      "method": "GET",
+      "url": "{{ base_url }}/directors",
+      "name": "Get All Directors",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_director_by_id",
+      "parentId": "wrk_movie_api",
+      "method": "GET",
+      "url": "{{ base_url }}/directors/1",
+      "name": "Get Director by ID",
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_director",
+      "parentId": "wrk_movie_api",
+      "method": "POST",
+      "url": "{{ base_url }}/directors",
+      "name": "Create Director",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"name\": \"New Director\", \"birthYear\": 1980 }"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_director",
+      "parentId": "wrk_movie_api",
+      "method": "PUT",
+      "url": "{{ base_url }}/directors/1",
+      "name": "Update Director",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"name\": \"Updated Director\", \"birthYear\": 1970 }"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_delete_director",
+      "parentId": "wrk_movie_api",
+      "method": "DELETE",
+      "url": "{{ base_url }}/directors/1",
+      "name": "Delete Director",
+      "_type": "request"
+    }
+  ]
+}

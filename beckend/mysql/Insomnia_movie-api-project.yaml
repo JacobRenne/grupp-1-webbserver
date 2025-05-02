@@ -1,0 +1,543 @@
+type: collection.insomnia.rest/5.0
+name: Movie API Project - Full CRUD
+meta:
+  id: wrk_7efcfc6882594d6aa9b74cac8f57742c
+  created: 1746001737110
+  modified: 1746001737110
+collection:
+  - url: "{{ base_url }}/movies"
+    name: Get All Movies
+    meta:
+      id: req_9369edd60d6d4941a2038c5fbaa3bf6f
+      created: 1746001737114
+      modified: 1746001737114
+      isPrivate: false
+      sortKey: -1745848581270
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/movies/1"
+    name: Get Movie by ID
+    meta:
+      id: req_b223a763b6164ddea1b83a034aa5f375
+      created: 1746001737114
+      modified: 1746001737114
+      isPrivate: false
+      sortKey: -1745848581271
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/movies/1"
+    name: Update Movie
+    meta:
+      id: req_536bf40e16c24030b5ad928de556001a
+      created: 1746001737115
+      modified: 1746001737115
+      isPrivate: false
+      sortKey: -1745848581272
+    method: PUT
+    body:
+      mimeType: application/json
+      text: '{ "title": "Updated Movie", "releaseYear": 2026, "directorId": 2 }'
+    headers:
+      - id: pair_b1c5c776b1f741939592ecea4c7c5c64
+        name: Content-Type
+        value: application/json
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/movies/1"
+    name: Delete Movie
+    meta:
+      id: req_ba01a0cbab284355b67eb0c7de501c17
+      created: 1746001737115
+      modified: 1746001737115
+      isPrivate: false
+      sortKey: -1745848581273
+    method: DELETE
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/movies"
+    name: Create Movie
+    meta:
+      id: req_c275fce3570e49a383d68d17edd00288
+      created: 1746001737115
+      modified: 1746001737115
+      isPrivate: false
+      sortKey: -1745848581272
+    method: POST
+    body:
+      mimeType: application/json
+      text: '{ "title": "New Movie", "releaseYear": 2025, "directorId": 1, "genreIds":
+        [1], "actorIds": [1] }'
+    headers:
+      - id: pair_32e8cef5060342b0b2c06c2dc022d084
+        name: Content-Type
+        value: application/json
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/genres/1"
+    name: Get Genre by ID
+    meta:
+      id: req_3d14a7a8c2d14ce3afb555996a755c38
+      created: 1746001737116
+      modified: 1746001737116
+      isPrivate: false
+      sortKey: -1745848581274
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/genres"
+    name: Get All Genres
+    meta:
+      id: req_2fa96a2bbdc74855bd4e956b9f60a035
+      created: 1746001737117
+      modified: 1746001737117
+      isPrivate: false
+      sortKey: -1745848581274
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/genres/1"
+    name: Update Genre
+    meta:
+      id: req_77824bf103f24e50833ecc672cb213b2
+      created: 1746001737117
+      modified: 1746001737117
+      isPrivate: false
+      sortKey: -1745848581275
+    method: PUT
+    body:
+      mimeType: application/json
+      text: '{ "name": "Updated Genre" }'
+    headers:
+      - id: pair_d4a0fda96b144164b2310da0cf282b5e
+        name: Content-Type
+        value: application/json
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/genres"
+    name: Create Genre
+    meta:
+      id: req_53e173c1a3584b759072b172e6402f58
+      created: 1746001737118
+      modified: 1746001737118
+      isPrivate: false
+      sortKey: -1745848581275
+    method: POST
+    body:
+      mimeType: application/json
+      text: '{ "name": "Action" }'
+    headers:
+      - id: pair_ed6ba827f5184414aceed9e709dc7b63
+        name: Content-Type
+        value: application/json
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/genres/1"
+    name: Delete Genre
+    meta:
+      id: req_7669ebe59403418d89d3b6a6b2729374
+      created: 1746001737118
+      modified: 1746001737118
+      isPrivate: false
+      sortKey: -1745848581276
+    method: DELETE
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/actors"
+    name: Get All Actors
+    meta:
+      id: req_03954d53df9f419bacb3a53213a0e52c
+      created: 1746001737119
+      modified: 1746001737119
+      isPrivate: false
+      sortKey: -1745848581277
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/actors"
+    name: Create Actor
+    meta:
+      id: req_63d64eb9955f45acbbd6418b7959af1f
+      created: 1746001737119
+      modified: 1746001737119
+      isPrivate: false
+      sortKey: -1745848581279
+    method: POST
+    body:
+      mimeType: application/json
+      text: '{ "name": "New Actor", "birthYear": 1995 }'
+    headers:
+      - id: pair_8f356a0ba8c940c5a7195b4e5e71cfc8
+        name: Content-Type
+        value: application/json
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/actors/1"
+    name: Get Actor by ID
+    meta:
+      id: req_e8b86bee80934b8991a47afd231b4c00
+      created: 1746001737119
+      modified: 1746001737119
+      isPrivate: false
+      sortKey: -1745848581278
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/actors/1"
+    name: Delete Actor
+    meta:
+      id: req_3b7774b76af14b13b9c29e1fd7ef834e
+      created: 1746001737120
+      modified: 1746001737120
+      isPrivate: false
+      sortKey: -1745848581280
+    method: DELETE
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/actors/1"
+    name: Update Actor
+    meta:
+      id: req_74f2d331a1a447c78a3a00605598ce02
+      created: 1746001737120
+      modified: 1746001737120
+      isPrivate: false
+      sortKey: -1745848581279
+    method: PUT
+    body:
+      mimeType: application/json
+      text: '{ "name": "Updated Actor", "birthYear": 1990 }'
+    headers:
+      - id: pair_653af25a77be432384b0f1d000fb98b6
+        name: Content-Type
+        value: application/json
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/directors"
+    name: Get All Directors
+    meta:
+      id: req_6289a683bb1f46fab962d11bb46984bc
+      created: 1746001737121
+      modified: 1746001737121
+      isPrivate: false
+      sortKey: -1745848581281
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/directors/1"
+    name: Get Director by ID
+    meta:
+      id: req_e2d21b5e3521487b9e93e7b6d2c641ec
+      created: 1746001737121
+      modified: 1746001737121
+      isPrivate: false
+      sortKey: -1745848581281
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/directors/1"
+    name: Update Director
+    meta:
+      id: req_3153f2f554344fccaac1ec4af6fc8209
+      created: 1746001737122
+      modified: 1746001737122
+      isPrivate: false
+      sortKey: -1745848581282
+    method: PUT
+    body:
+      mimeType: application/json
+      text: '{ "name": "Updated Director", "birthYear": 1970 }'
+    headers:
+      - id: pair_886d908f384440de81ecb5338c7230ce
+        name: Content-Type
+        value: application/json
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/directors"
+    name: Create Director
+    meta:
+      id: req_fabef89b1d6c4640b0933bbaf0f347ed
+      created: 1746001737122
+      modified: 1746001737122
+      isPrivate: false
+      sortKey: -1745848581282
+    method: POST
+    body:
+      mimeType: application/json
+      text: '{ "name": "Christopher Nolan", "birthYear": 1970 }'
+    headers:
+      - id: pair_e372f2dd9adf4e8781408363f1dbf626
+        name: Content-Type
+        value: application/json
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3000/api/relations/moviegenres
+    name: To link a genre to a movie
+    meta:
+      id: req_68851243c2f74ce291f0f916d958f61e
+      created: 1746001737123
+      modified: 1746001737123
+      isPrivate: false
+      sortKey: -1745998805645
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "movieId": 1,
+          "genreId": 1
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ base_url }}/directors/1"
+    name: Delete Director
+    meta:
+      id: req_f3e37d559c804d2ea8b7532162886ef6
+      created: 1746001737123
+      modified: 1746001737123
+      isPrivate: false
+      sortKey: -1745848581283
+    method: DELETE
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3000/api/relations/movieactors
+    name: To link an actor to a movie
+    meta:
+      id: req_957cc95b8afe46aeacfc284dbb39a0e9
+      created: 1746001737124
+      modified: 1746001737124
+      isPrivate: false
+      sortKey: -1745999032872
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "movieId": 1,
+          "actorId": 1
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3000/api/relations/movieactors
+    name: Delete an actor from a movie
+    meta:
+      id: req_c716474300cb4dc7a91be68fb5fcb768
+      created: 1746001737124
+      modified: 1746001737124
+      isPrivate: false
+      sortKey: -1745999431430
+    method: DELETE
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "movieId": 1,
+          "actorId": 1
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3000/api/relations/moviegenres
+    name: Delete an genre from a movie
+    meta:
+      id: req_6761181cc9d94831a6b7c9744b3d3e3a
+      created: 1746001737125
+      modified: 1746001737125
+      isPrivate: false
+      sortKey: -1745998919258.5
+    method: DELETE
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "movieId": 1,
+          "genreId": 1
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_79c48c5f592145caaba556b538097661
+    created: 1746001737112
+    modified: 1746001737112
+environments:
+  name: Base Environment
+  meta:
+    id: env_c7b28351a0c94e9f9e27597e90c13f19
+    created: 1746001737111
+    modified: 1746001737111
+    isPrivate: false
+  data:
+    base_url: http://localhost:3000/api

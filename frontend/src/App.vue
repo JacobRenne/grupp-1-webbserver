@@ -1,11 +1,17 @@
-<script setup></script>
+<script setup>
+
+</script>
 
 <template>
-  <header></header>
 
-  <main>
-    <p>Hej heh allt fungerar</p>
-  </main>
+	<header></header>
+
+  	<main>
+    	<RouterView></RouterView>
+  	</main>
+
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

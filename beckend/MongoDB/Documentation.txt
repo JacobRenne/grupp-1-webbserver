@@ -1,0 +1,257 @@
+API Dokumentation
+
+Base URL
+http://localhost:3000/api
+
+Användare (Users)
+
+ENDPOINTS:
+
+POST /users - Skapa användare
+GET /users - Hämta alla användare
+GET /users/:id - Hämta specifik användare
+PUT /users/:id - Uppdatera användare
+DELETE /users/:id - Radera användare
+
+REQUESTS & RESPONSES:
+
+1. Skapa användare
+
+Request:
+
+POST http://localhost:3000/api/users
+
+JSON objekt som ska skickas:
+
+{
+  "username": "filmfantast",
+  "email": "film@example.com",
+  "password": "säkert123",
+  "profile": {
+    "firstName": "Anna",
+    "lastName": "Andersson",
+    "bio": "Filmälskare sedan 1990",
+    "avatar": "https://example.com/avatar.jpg"
+  }
+}
+
+Response (201):
+
+{
+    "username": "filmfantast",
+    "email": "film@example.com",
+    "password": "säkert123",
+    "profile": {
+        "firstName": "Anna",
+        "lastName": "Andersson",
+        "bio": "Filmälskare sedan 1990",
+        "avatar": "https://example.com/avatar.jpg"
+    },
+    "_id": "6817a32b1694120461c241a8",
+    "createdAt": "2025-05-04T17:26:03.499Z",
+    "__v": 0
+}
+
+2. Hämta alla användare
+
+Request:
+
+GET http://localhost:3000/api/users
+
+Response (200):
+[
+    {
+        "profile": {
+            "firstName": "Joehnnnnnnn",
+            "lastName": "Deoennnnnnn",
+            "bio": "Avid movie enthusiaste and criticnnnnnnnnn",
+            "avatar": "https://example.com/avatars/joeh9999n-doe.jpg"
+        },
+        "_id": "681791c8277e2bfeb27b33c8",
+        "username": "movie_lover42",
+        "email": "movielover@example.com",
+        "password": "securePassword123",
+        "createdAt": "2025-05-04T16:11:52.751Z",
+        "__v": 0
+    } ...
+]
+
+3. Hämta specifik användare
+
+Request:
+
+GET http://localhost:3000/api/users/:id
+
+Response (200):
+
+{
+    "profile": {
+        "firstName": "Joehnnnnnnn",
+        "lastName": "Deoennnnnnn",
+        "bio": "Avid movie enthusiaste and criticnnnnnnnnn",
+        "avatar": "https://example.com/avatars/joeh9999n-doe.jpg"
+    },
+    "_id": "681791c8277e2bfeb27b33c8",
+    "username": "movie_lover42",
+    "email": "movielover@example.com",
+    "password": "securePassword123",
+    "createdAt": "2025-05-04T16:11:52.751Z",
+    "__v": 0
+}
+
+4. Uppdatera användare
+
+Request:
+
+PUT http://localhost:3000/api/users/:id
+
+{
+  "profile": {
+    "firstName": “Petrov”,
+    "lastName": “Danilo”,
+    "bio": "Avid movie enthusiaste and critic",
+    "avatar": "https://example.com/avatars/joeh9999n-doe.jpg"
+  }
+}
+
+Response (200):
+
+{
+    "profile": {
+        "firstName": "Petrov",
+        "lastName": "Danilo",
+        "bio": "Avid movie enthusiaste and critic",
+        "avatar": "https://example.com/avatars/joeh9999n-doe.jpg"
+    },
+    "_id": "681791c8277e2bfeb27b33c8",
+    "username": "movie_lover42",
+    "email": "movielover@example.com",
+    "password": "securePassword123",
+    "createdAt": "2025-05-04T16:11:52.751Z",
+    "__v": 0
+}
+
+5. Radera användare
+
+Request:
+
+DELETE http://localhost:3000/api/users/:id
+
+Response (200):
+{
+  "message": "User deleted successfully"
+}
+
+
+
+
+
+
+
+Recensioner (Reviews)
+
+ENDPOINTS:
+POST /reviews - Skapa recension
+GET /reviews - Hämta alla recensioner
+GET /reviews/:id - Hämta specifik recension
+PUT /reviews/:id - Uppdatera recension
+DELETE /reviews/:id - Radera recension
+
+REQUESTS & RESPONSES:
+
+1. Skapa recension
+
+Request:
+
+POST http://localhost:3000/api/reviews
+
+{
+  "movieId": "tt123456",
+  "reviewerName": "Filmkritiker",
+  "rating": 5,
+  "comment": "Enastående film!"
+}
+
+Response (201):
+
+{
+    "movieId": "tt123456",
+    "reviewerName": "Filmkritiker",
+    "rating": 5,
+    "comment": "Enastående film!",
+    "_id": "6817a688e756682d375734a3",
+    "createdAt": "2025-05-04T17:40:24.224Z",
+    "__v": 0
+}
+
+2. Hämta alla recensioner
+
+Request:
+
+GET http://localhost:3000/api/reviews
+
+Response (200):
+
+[
+    {
+        "_id": "681401c35872a1f3bde83537",
+        "movieId": "123456",
+        "reviewerName": "John Doe",
+        "rating": 4,
+        "comment": "Updated review - still a great movie!",
+        "createdAt": "2025-05-01T23:20:35.693Z",
+        "__v": 0
+    } ...
+]
+
+3. Hämta specifik recension
+
+Request:
+
+GET http://localhost:3000/api/reviews/id
+
+Response (200):
+
+{
+    "_id": "6817a688e756682d375734a3",
+    "movieId": "tt123456",
+    "reviewerName": "Filmkritiker",
+    "rating": 5,
+    "comment": "Enastående film!",
+    "createdAt": "2025-05-04T17:40:24.224Z",
+    "__v": 0
+}
+
+4. Uppdatera recension
+
+Request:
+
+PUT http://localhost:3000/api/reviews/id
+
+{
+  "rating": 4,
+  "comment": "Uppdaterad recension"
+}
+
+Response (200):
+
+{
+    "_id": "6817a688e756682d375734a3",
+    "movieId": "tt123456",
+    "reviewerName": "Filmkritiker",
+    "rating": 4,
+    "comment": "Uppdaterad recension",
+    "createdAt": "2025-05-04T17:40:24.224Z",
+    "__v": 0
+}
+
+5. Radera recension
+
+Request:
+
+DELETE http://localhost:3000/api/reviews/id
+
+Response (200):
+{
+  "message": "Review deleted successfully"
+}

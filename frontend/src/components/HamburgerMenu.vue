@@ -21,7 +21,7 @@ function closeMenu() {
     <button @click="toggleMenu" id="toggleMenuBtn">Menu</button>
     <div v-if="isMenuOpen" class="OpenMenu">
       <ul>
-        <li><router-link to="/movie">Movies</router-link></li>
+        <li><router-link to="/movies">Movies</router-link></li>
         <li>Actors</li>
         <li>Directors</li>
         <li>Genres</li>

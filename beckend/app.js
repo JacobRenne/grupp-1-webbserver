@@ -25,6 +25,7 @@ app.use('/api/directors', directorRoutes);
 app.use('/api/relations', relationRoutes);
 
 // MongoDB
+/*
 const reviewRoutes = require('./MongoDB/routes/reviewRoutes');
 const connectionMongoDB = require('./MongoDB/connectionMongoDB');
 const userRoutes = require('./MongoDB/routes/userRoutes');
@@ -37,7 +38,7 @@ connectionMongoDB().then(() => {
 
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/users', userRoutes);
-
+*/
 // Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,27 +1,31 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { getMovieById, getDirectorById } from '@/api/api';
 
 const route = useRoute()
 const movie = ref(null)
 
 onMounted(async () => {
-    const id = route.params.id
-
     try {
-        const res = await fetch(`http://localhost:3000/api/movies/${id}`)
-        movie.value = await res.json()
-        console.log(movie.value)
-    } catch (error) { console.error(error)}
+        const movieRes = await getMovieById(route.params.id)
+        movie.value = movieRes.data
+    } catch (error) {
+        console.error(error)
+    }
 })
-
-
 </script>
 
 <template>
-    <div v-if="movie">
-        <h1>{{  movie.title }}</h1>
-        <p>{{ movie.releaseYear }}</p>
+    <div class="movie-card" v-if="movie">
+        <img src="" alt="Movie poster">
+        <div class="info">
+            <h1>{{ movie.title }} ({{ movie.releaseYear }})</h1>
+            <p><strong>Director:</strong> {{ movie.directorName}}</p>
+            <p><strong>Rating:</strong> {{ movie.rating }}</p>
+            <p><strong>Views:</strong> {{ movie.views }}</p>
+            <p><strong>Genres:</strong> {{ movie.genres.join(', ') }}</p>
+        </div>
     </div>
 </template>
 

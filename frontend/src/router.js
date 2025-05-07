@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
 import homeView from './views/home.vue';
 import singleMovieView from './views/singleMovie.vue';
@@ -8,7 +8,7 @@ import popularMoviesView from './views/PopularMovies.vue';
 
 
 export default createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes: [
     { component: homeView, path: '/' },
     { component: singleMovieView, path: '/movie/:id' },

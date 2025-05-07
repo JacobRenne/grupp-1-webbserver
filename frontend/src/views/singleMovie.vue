@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { getMovieById, getDirectorById } from '@/api/api';
+import { getMovieById } from '@/api/api';
 
 const route = useRoute()
 const movie = ref(null)

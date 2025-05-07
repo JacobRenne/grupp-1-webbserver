@@ -9,7 +9,7 @@ import allMovies from './views/allMovies.vue';
 
 
 export default createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/'),
   routes: [
     { component: homeView, path: '/' },
     { component: singleMovieView, path: '/movie/:id' },

@@ -3,5 +3,5 @@
 </script>
 
 <template>
-    <h1>Does this work?</h1>
+    <h1>Just the homepage text</h1>
 </template>

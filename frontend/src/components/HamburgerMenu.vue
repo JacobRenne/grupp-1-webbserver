@@ -51,6 +51,11 @@ li:hover {
   border-radius: 5%;
 }
 
+li > a {
+  color: hsla(160, 100%, 37%, 1);
+  text-decoration: none;
+}
+
 button {
   background-color: #212529;
   color: whitesmoke;

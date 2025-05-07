@@ -16,28 +16,38 @@ function closeMenu() {
 
 <template>
   <div id="Menu">
-    <div v-if="!isMenuOpen" class="collapse" id="backgroundOverlay" />
+    <!-- Mobile overlay -->
     <div v-if="isMenuOpen" id="backgroundOverlay" @click="closeMenu" />
-    <button @click="toggleMenu" id="toggleMenuBtn">Menu</button>
-    <div v-if="isMenuOpen" class="OpenMenu">
+
+    <!-- Menu button (mobile only) -->
+    <button @click="toggleMenu" id="toggleMenuBtn" class="mobile-only">Menu</button>
+
+    <!-- Desktop menu (always visible on large screens) -->
+    <ul class="desktop-menu">
+      <li><router-link to="/movie">All Movies</router-link></li>
+      <li><router-link to="/top-movies">Top Movies</router-link></li>
+      <li><router-link to="/popular-movies">Popular Movies</router-link></li>
+    </ul>
+
+    <!-- Mobile menu (only shown when toggled) -->
+    <div v-if="isMenuOpen" class="OpenMenu mobile-only">
       <ul>
-        <li><router-link to="/movies">Movies</router-link></li>
-        <li>Actors</li>
-        <li>Directors</li>
-        <li>Genres</li>
+        <li><router-link to="/movie">All Movies</router-link></li>
+        <li><router-link to="/top-movies">Top Movies</router-link></li>
+        <li><router-link to="/popular-movies">Popular Movies</router-link></li>
       </ul>
     </div>
   </div>
 </template>
 
 <style scoped>
+/* Common menu styling */
 ul {
-  display: inline;
   list-style: none;
   background-color: #212529;
   color: whitesmoke;
-  position: absolute;
   padding-left: 0;
+  margin: 0;
 }
 
 li {
@@ -70,5 +80,45 @@ button {
 
 #Menu {
   position: relative;
+}
+
+/* Desktop menu: visible only on larger screens */
+.desktop-menu {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktop-menu {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .mobile-only {
+    display: none !important;
+  }
+
+  .OpenMenu {
+    display: none !important;
+  }
+}
+
+/* Mobile menu: full-screen overlay style */
+.OpenMenu {
+  position: absolute;
+  top: 50px;
+  background-color: #212529;
+  width: 100%;
+  z-index: 10;
+}
+
+/* Background overlay */
+#backgroundOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 5;
 }
 </style>

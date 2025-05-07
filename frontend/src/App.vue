@@ -84,6 +84,8 @@ a {
 
 a:hover {
   background-color: hsla(160, 100%, 37%, 0.2);
+  border-radius: 4px;
+  padding: 2px 4px;
 }
 
 #icon {

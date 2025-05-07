@@ -185,6 +185,7 @@ const genreChartData = computed(() => {
 </script>
 
 <template>
+
     <div class="page-container">
       <h1>Create Movie</h1>
   

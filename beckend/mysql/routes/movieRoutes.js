@@ -4,6 +4,10 @@ const movieController = require('../controllers/movieController');
 
 // ROUTER
 
+// Viktigt: specialrutter först!
+router.get('/top', movieController.getTopMovies);
+router.get('/popular', movieController.getPopularMovies);
+
 // Hämta alla filmer
 router.get('/', movieController.getAllMovies);
 

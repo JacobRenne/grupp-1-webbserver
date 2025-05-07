@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000/api'; // Justera URL vid behov
+const API_BASE_URL = 'http://localhost:3000/api'; // Justera vid deployment
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -12,6 +12,10 @@ export const getMovieById = (id) => api.get(`/movies/${id}`);
 export const createMovie = (data) => api.post('/movies', data);
 export const updateMovie = (id, data) => api.put(`/movies/${id}`, data);
 export const deleteMovie = (id) => api.delete(`/movies/${id}`);
+
+// Top & Popular Movies
+export const getTopMovies = () => api.get('/movies/top');
+export const getPopularMovies = () => api.get('/movies/popular');
 
 // Actors
 export const getAllActors = () => api.get('/actors');

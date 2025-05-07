@@ -1,15 +1,19 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router';
 
-import homeView from './views/home.vue'
-import singleMovieView from './views/singleMovie.vue'
-import profileView from './views/profile.vue'
+import homeView from './views/home.vue';
+import singleMovieView from './views/singleMovie.vue';
+import profileView from './views/profile.vue';
+import topMoviesView from './views/TopMovies.vue';
+import popularMoviesView from './views/PopularMovies.vue';
 
 
 export default createRouter({
-	history: createWebHashHistory(),
-	routes: [
-		{ component: homeView, path: '/' },
-		{ component: singleMovieView, path: '/movie/:id' },
-		{ component: profileView, path: '/profile' }
-	]
-})
+  history: createWebHashHistory(),
+  routes: [
+    { component: homeView, path: '/' },
+    { component: singleMovieView, path: '/movie/:id' },
+    { component: profileView, path: '/profile' },
+    { component: topMoviesView, path: '/top-movies' },
+    { component: popularMoviesView, path: '/popular-movies' }
+  ]
+});

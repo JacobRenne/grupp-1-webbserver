@@ -8,9 +8,7 @@ function toggleMenu() {
 }
 
 function closeMenu() {
-  if ((isMenuOpen.value = true)) {
-    isMenuOpen.value = !isMenuOpen.value;
-  }
+  isMenuOpen.value = false;
 }
 </script>
 
@@ -32,9 +30,9 @@ function closeMenu() {
     <!-- Mobile menu (only shown when toggled) -->
     <div v-if="isMenuOpen" class="OpenMenu mobile-only">
       <ul>
-        <li><router-link to="/movie">All Movies</router-link></li>
-        <li><router-link to="/top-movies">Top Movies</router-link></li>
-        <li><router-link to="/popular-movies">Popular Movies</router-link></li>
+        <li><router-link to="/movie" @click="closeMenu()">All Movies</router-link></li>
+        <li><router-link to="/top-movies" @click="closeMenu()">Top Movies</router-link></li>
+        <li><router-link to="/popular-movies" @click="closeMenu()">Popular Movies</router-link></li>
       </ul>
     </div>
   </div>

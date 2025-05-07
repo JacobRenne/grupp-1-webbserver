@@ -57,7 +57,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding: 0 2rem;
+  padding: 0 5vw;
 }
 
 ul {

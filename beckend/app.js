@@ -29,6 +29,7 @@ app.use('/api/relations', relationRoutes);
 const reviewRoutes = require('./MongoDB/routes/reviewRoutes');
 const connectionMongoDB = require('./MongoDB/connectionMongoDB');
 const userRoutes = require('./MongoDB/routes/userRoutes');
+const loginRoutes = require('./MongoDB/routes/loginRoutes');
 
 connectionMongoDB().then(() => {
     console.log('MongoDB connected successfully');
@@ -38,6 +39,7 @@ connectionMongoDB().then(() => {
 
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/login', loginRoutes);
 
 // Server
 const PORT = process.env.PORT || 3000;

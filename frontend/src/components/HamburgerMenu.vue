@@ -25,6 +25,7 @@ function closeMenu() {
       <li><router-link to="/movie">All Movies</router-link></li>
       <li><router-link to="/top-movies">Top Movies</router-link></li>
       <li><router-link to="/popular-movies">Popular Movies</router-link></li>
+      <li><router-link to="/createAccount">Sign up</router-link></li>
     </ul>
 
     <!-- Mobile menu (only shown when toggled) -->

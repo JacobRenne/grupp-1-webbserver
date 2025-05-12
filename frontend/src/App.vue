@@ -75,15 +75,16 @@ li {
 
 a {
     text-decoration: none;
-    color: hsla(160, 100%, 37%, 1);
-    transition: 0.4s;
-    padding: 3px;
+    color: #8bc1db;
+    background-color: #212529;
+    transition: 0.2s;
+    border-radius: 2px;
+    margin: 5px;
+    padding: 8px 10px;
 }
 
 a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-    border-radius: 4px;
-    padding: 2px 4px;
+    background-color: #000814;
 }
 
 #icon {

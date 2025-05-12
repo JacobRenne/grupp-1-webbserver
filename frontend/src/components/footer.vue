@@ -1,11 +1,7 @@
-<script setup>
-
-</script>
-
+<script setup></script>
 
 <template>
     <footer class="footer">
-        
         <div class="footer-top">
             <a href="/home">Homepage</a>
             <a href="/profile">Profile</a>
@@ -18,7 +14,6 @@
         </div>
     </footer>
 </template>
-
 
 <style scoped>
 footer {
@@ -36,15 +31,17 @@ footer {
     flex-wrap: wrap;
     justify-content: center;
     gap: 15px;
+    color: 8BC1DB;
 }
 
 .footer-top a {
-    color: hsla(160, 100%, 37%, 1);
+    color: #8bc1db;
     transition: 0.3s;
+    text-decoration: none;
 }
 
 .footer-top a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    background-color: #002b41;
     border-radius: 4px;
     padding: 2px 4px;
 }
@@ -56,12 +53,12 @@ footer {
 }
 
 #icon {
-  background-color: #09a6f3;
-  color: #212529;
-  font-size: 1.5rem;
-  padding: 12px 12px;
-  border-radius: 4px;
-  text-decoration: none;
-  text-align: center;
+    background-color: #09a6f3;
+    color: #212529;
+    font-size: 1.5rem;
+    padding: 12px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
 }
 </style>

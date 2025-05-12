@@ -7,11 +7,32 @@ const movies = ref([]);
 const isLoading = ref(true);
 const error = ref(null);
 
-// Hämta alla filmer när komponenten laddas
+const getImageUrl = (path) => {
+    return path ? `http://localhost:3000${path}` : "";
+};
+
+// Hämta alla filmer när komponenten laddats
 onMounted(async () => {
     try {
         const response = await getAllMovies();
-        movies.value = response.data;
+        movies.value = response.data.map((movie) => ({
+            ...movie,
+            genres: Array.isArray(movie.genres)
+                ? movie.genres
+                : typeof movie.genres === "string"
+                ? movie.genres.split(",").map((g) => g.trim())
+                : [],
+            actors: Array.isArray(movie.actors)
+                ? movie.actors
+                : typeof movie.actors === "string"
+                ? movie.actors.split(",").map((a) => a.trim())
+                : [],
+            actorsBirthYear: Array.isArray(movie.actorsBirthYear)
+                ? movie.actorsBirthYear
+                : typeof movie.actorsBirthYear === "string"
+                ? movie.actorsBirthYear.split(",").map((y) => y.trim())
+                : [],
+        }));
     } catch (err) {
         error.value = err.message || "Failed to fetch movies";
     } finally {
@@ -32,7 +53,7 @@ onMounted(async () => {
                 <RouterLink :to="{ path: `/movie/${movie.movieId}` }">
                     <img
                         v-if="movie.imageUrl"
-                        :src="movie.imageUrl"
+                        :src="getImageUrl(movie.imageUrl)"
                         :alt="movie.title"
                         class="movie-poster"
                     />
@@ -45,8 +66,34 @@ onMounted(async () => {
                                 </h2>
                             </li>
                             <li>Director: {{ movie.directorName }}</li>
-                            <li>Genres: {{ movie.genres.join(", ") }}</li>
-                            <li>Actors: {{ movie.actors.join(", ") }}</li>
+                            <span v-if="movie.directorBirthYear"
+                                >({{ movie.directorBirthYear }})</span
+                            >
+                            <li>
+                                Genres: {{ movie.genres.join(", ") || "N/A" }}
+                            </li>
+                            <li>
+                                Actors:
+                                <span
+                                    v-if="movie.actors && movie.actors.length"
+                                >
+                                    <span
+                                        v-for="(actor, index) in movie.actors"
+                                        :key="index"
+                                    >
+                                        {{ actor }} ({{
+                                            movie.actorsBirthYear?.[index] ||
+                                            "okänt"
+                                        }})<span
+                                            v-if="
+                                                index < movie.actors.length - 1
+                                            "
+                                            >,
+                                        </span>
+                                    </span>
+                                </span>
+                                <span v-else>N/A</span>
+                            </li>
                         </ul>
                     </div>
                 </RouterLink>

@@ -13,7 +13,7 @@ export default createRouter({
   routes: [
     { component: homeView, path: '/' },
     { component: singleMovieView, path: '/movie/:id' },
-    { component: profileView, path: '/profile' },
+    { component: profileView, path: '/user/:id' },
     { component: topMoviesView, path: '/top-movies' },
     { component: popularMoviesView, path: '/popular-movies' },
     { component: allMovies, path: '/movie'}

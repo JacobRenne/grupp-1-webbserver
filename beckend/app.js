@@ -29,21 +29,21 @@ app.use('/api/relations', relationRoutes);
 
 // === MongoDB routes and connection ===
 const reviewRoutes = require('./MongoDB/routes/reviewRoutes');
-const userRoutes = require('./MongoDB/routes/userRoutes');
 const connectionMongoDB = require('./MongoDB/connectionMongoDB');
+const userRoutes = require('./MongoDB/routes/userRoutes');
+const loginRoutes = require('./MongoDB/routes/loginRoutes');
 
-// === Start the server when MongoDB is connected ===
-connectionMongoDB()
-  .then(() => {
-    console.log('✅ MongoDB connected successfully');
+connectionMongoDB().then(() => {
+    console.log('MongoDB connected successfully');
+}).catch(err => {
+    console.error('MongoDB connection error:', err);
+});
 
-    app.use('/api/reviews', reviewRoutes);
-    app.use('/api/users', userRoutes);
+app.use('/api/reviews', reviewRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/login', loginRoutes);
 
-    app.listen(PORT, () => {
-      console.log(`🚀 Server is running at http://localhost:${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.error('❌ MongoDB connection failed:', err);
-  });
+// Server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`🚀 Server is running at http://localhost:${PORT}`));
+

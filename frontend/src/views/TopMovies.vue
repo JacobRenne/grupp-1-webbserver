@@ -5,8 +5,37 @@ import { getTopMovies } from "@/api/api";
 const topMovies = ref([]);
 
 onMounted(async () => {
-  const res = await getTopMovies();
-  topMovies.value = res.data;
+  try {
+    const res = await getTopMovies();
+    topMovies.value = res.data.map((movie) => {
+      const actors = Array.isArray(movie.actors)
+        ? movie.actors
+        : typeof movie.actors === "string"
+        ? movie.actors.split(",")
+        : [];
+
+      const actorsBirthYear = Array.isArray(movie.actorsBirthYear)
+        ? movie.actorsBirthYear
+        : typeof movie.actorsBirthYear === "string"
+        ? movie.actorsBirthYear.split(",").map((year) => year.trim())
+        : [];
+
+      const genres = Array.isArray(movie.genres)
+        ? movie.genres
+        : typeof movie.genres === "string"
+        ? movie.genres.split(",")
+        : [];
+
+      return {
+        ...movie,
+        actors,
+        actorsBirthYear,
+        genres,
+      };
+    });
+  } catch (err) {
+    console.error("Could not fetch top movies:", err);
+  }
 });
 
 const getImageUrl = (path) => {
@@ -25,7 +54,6 @@ const getStarRating = (rating) => {
     '☆'.repeat(Math.max(0, emptyStars))
   );
 };
-
 </script>
 
 <template>
@@ -46,9 +74,29 @@ const getStarRating = (rating) => {
           </div>
         </div>
         <h3>{{ movie.title }} ({{ movie.releaseYear }})</h3>
-        <p><strong>Genres:</strong> {{ movie.genres.join(', ') }}</p>
-        <p><strong>Director:</strong> {{ movie.directorName }}</p>
-        <p><strong>Actors:</strong> {{ movie.actors.join(', ') }}</p>
+
+        <p><strong>Genres:</strong> {{ movie.genres?.join(', ') || 'N/A' }}</p>
+
+        <p>
+          <strong>Director:</strong>
+          {{ movie.directorName }}
+          <span v-if="movie.directorBirthYear">({{ movie.directorBirthYear }})</span>
+        </p>
+
+        <p>
+          <strong>Actors:</strong>
+          <span v-if="movie.actors && movie.actors.length">
+            <span v-for="(actor, index) in movie.actors" :key="index">
+              {{ actor }} ({{ movie.actorsBirthYear?.[index] || "okänt" }})<span
+                v-if="index < movie.actors.length - 1"
+                >, </span
+              >
+            </span>
+          </span>
+          <span v-else>N/A</span>
+        </p>
+
+        <p><strong>Description:</strong> {{ movie.description }}</p>
       </div>
     </div>
   </div>

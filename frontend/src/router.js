@@ -6,6 +6,7 @@ import profileView from './views/profile.vue';
 import topMoviesView from './views/TopMovies.vue';
 import popularMoviesView from './views/PopularMovies.vue';
 import allMovies from './views/allMovies.vue';
+import EditMovieView from '@/views/EditMovieView.vue';
 
 
 export default createRouter({
@@ -16,6 +17,7 @@ export default createRouter({
     { component: profileView, path: '/user/:id' },
     { component: topMoviesView, path: '/top-movies' },
     { component: popularMoviesView, path: '/popular-movies' },
-    { component: allMovies, path: '/movie'}
+    { component: allMovies, path: '/movie'},
+	{ component: EditMovieView, path: '/edit/:id', }
   ]
 });

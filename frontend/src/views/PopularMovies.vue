@@ -7,15 +7,41 @@ const popularMovies = ref([]);
 onMounted(async () => {
   try {
     const res = await getPopularMovies();
-    popularMovies.value = res.data;
+
+    // Se till att konvertera birthYear-data
+    popularMovies.value = res.data.map((movie) => {
+      const actors = Array.isArray(movie.actors)
+        ? movie.actors
+        : typeof movie.actors === "string"
+        ? movie.actors.split(",")
+        : [];
+
+      const actorsBirthYear = Array.isArray(movie.actorsBirthYear)
+        ? movie.actorsBirthYear
+        : typeof movie.actorsBirthYear === "string"
+        ? movie.actorsBirthYear.split(",").map((year) => year.trim())
+        : [];
+
+      const genres = Array.isArray(movie.genres)
+        ? movie.genres
+        : typeof movie.genres === "string"
+        ? movie.genres.split(",")
+        : [];
+
+      return {
+        ...movie,
+        actors,
+        actorsBirthYear,
+        genres,
+      };
+    });
   } catch (err) {
-    console.error('Could not fetch popular movies:', err);
+    console.error("Could not fetch popular movies:", err);
   }
 });
 
-
 const getImageUrl = (path) => {
-  return path ? `http://localhost:3000${path}` : '';
+  return path ? `http://localhost:3000${path}` : "";
 };
 </script>
 
@@ -25,20 +51,36 @@ const getImageUrl = (path) => {
     <div class="movie-grid">
       <div class="movie-card" v-for="movie in popularMovies" :key="movie.movieId">
         <div class="image-wrapper">
-  <img
-    v-if="movie.imageUrl"
-    :src="getImageUrl(movie.imageUrl)"
-    :alt="`Image of ${movie.title}`"
-    class="movie-image"
-    loading="lazy"
-  />
-  <div class="view-badge">{{ movie.views }} views</div>
-</div>
+          <img
+            v-if="movie.imageUrl"
+            :src="getImageUrl(movie.imageUrl)"
+            :alt="`Image of ${movie.title}`"
+            class="movie-image"
+            loading="lazy"
+          />
+          <div class="view-badge">{{ movie.views }} views</div>
+        </div>
 
         <h3>{{ movie.title }} ({{ movie.releaseYear }})</h3>
-        <p><strong>Genres:</strong> {{ movie.genres?.join(', ') || 'N/A' }}</p>
-        <p><strong>Director:</strong> {{ movie.directorName || 'N/A' }}</p>
-        <p><strong>Actors:</strong> {{ movie.actors?.join(', ') || 'N/A' }}</p>
+        <p><strong>Genres:</strong> {{ movie.genres?.join(", ") || "N/A" }}</p>
+        <p>
+          <strong>Director:</strong>
+          {{ movie.directorName }}
+          <span v-if="movie.directorBirthYear">({{ movie.directorBirthYear }})</span>
+        </p>
+        <p>
+          <strong>Actors:</strong>
+          <span v-if="movie.actors && movie.actors.length">
+            <span v-for="(actor, index) in movie.actors" :key="index">
+              {{ actor }} ({{ movie.actorsBirthYear?.[index] || "okänt" }})<span
+                v-if="index < movie.actors.length - 1"
+                >, </span
+              >
+            </span>
+          </span>
+          <span v-else>N/A</span>
+        </p>
+        <p><strong>Description:</strong> {{ movie.description }}</p>
       </div>
     </div>
   </div>

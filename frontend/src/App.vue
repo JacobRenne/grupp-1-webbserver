@@ -13,7 +13,6 @@ import { RouterLink, RouterView } from "vue-router";
                 <ul>
                     <li><HamburgerMenu /></li>
                     <li><SearchBar /></li>
-                    <li><router-link to="/user/:id">Profile</router-link></li>
                 </ul>
             </nav>
         </header>

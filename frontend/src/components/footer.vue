@@ -3,13 +3,10 @@
 <template>
     <footer class="footer">
         <div class="footer-top">
-            <a href="/home">Homepage</a>
-            <a href="/profile">Profile</a>
-            <a href="">Top Movies</a>
-            <a href="">Popular Movies</a>
+       
         </div>
         <div class="footer-bottom">
-            <a href="/" id="icon">FMDb</a>
+          
             <p>&copy 2025 FMDb, inc.</p>
         </div>
     </footer>

@@ -129,7 +129,161 @@ SELECT
 FROM movies m
 LEFT JOIN directors d ON m.directorId = d.id
 LEFT JOIN movieGenres mg ON m.id = mg.movieId
+LEFT JOIN genres g ON mg.genreId = g.id-- Nollställ databasen (ta bort tabeller i rätt ordning)
+DROP TABLE IF EXISTS movieActors;
+DROP TABLE IF EXISTS movieGenres;
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS actors;
+DROP TABLE IF EXISTS genres;
+DROP TABLE IF EXISTS directors;
+
+-- Skapa databasen
+CREATE DATABASE IF NOT EXISTS movieDb;
+USE movieDb;
+
+-- Tabell för regissörer
+CREATE TABLE directors (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    birthYear SMALLINT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- Tabell för filmer
+CREATE TABLE movies (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(100) NOT NULL,
+    releaseYear SMALLINT NOT NULL,
+    directorId INT,
+    imageUrl VARCHAR(255),
+    rating FLOAT DEFAULT 0,
+    views INT DEFAULT 0,
+    description TEXT,
+    FOREIGN KEY (directorId) REFERENCES directors(id) ON DELETE SET NULL
+);
+
+-- Tabell för genrer
+CREATE TABLE genres (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Tabell för skådespelare
+CREATE TABLE actors (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    birthYear SMALLINT
+);
+
+-- Många-till-många mellan filmer och genrer
+CREATE TABLE movieGenres (
+    movieId INT,
+    genreId INT,
+    PRIMARY KEY (movieId, genreId),
+    FOREIGN KEY (movieId) REFERENCES movies(id) ON DELETE CASCADE,
+    FOREIGN KEY (genreId) REFERENCES genres(id) ON DELETE CASCADE
+);
+
+-- Många-till-många mellan filmer och skådespelare
+CREATE TABLE movieActors (
+    movieId INT,
+    actorId INT,
+    PRIMARY KEY (movieId, actorId),
+    FOREIGN KEY (movieId) REFERENCES movies(id) ON DELETE CASCADE,
+    FOREIGN KEY (actorId) REFERENCES actors(id) ON DELETE CASCADE
+);
+
+-- Index för snabbare sökning
+CREATE INDEX idxMovieGenres ON movieGenres(movieId, genreId);
+CREATE INDEX idxMovieActors ON movieActors(movieId, actorId);
+
+-- Exempeldata
+
+-- Regissörer
+INSERT INTO directors (name, birthYear) VALUES
+('Christopher Nolan', 1970),
+('Martin Scorsese', 1942),
+('Steven Spielberg', 1946),
+('Quentin Tarantino', 1963);
+
+-- Filmer
+INSERT INTO movies (title, releaseYear, directorId, imageUrl, rating, views, description) VALUES
+('Inception', 2010, 1, '/uploads/inception.png', 8.8, 5000, 'A skilled thief uses dream-sharing to steal secrets.'),
+('The Dark Knight', 2008, 1, '/uploads/thedarknight.png', 8.7, 4200, 'Batman battles Joker to save Gotham.'),
+('Inglorious Basterds', 2009, 4, '/uploads/inglouriousbasterds.png', 8.4, 2500, 'Jewish soldiers plot to kill Nazis in WWII.'),
+('Raiders of the Lost Ark', 1981, 3, '/uploads/raidersofthelostark.png', 8.4, 3000, 'An archaeologist searches for the Ark of the Covenant.'),
+('Goodfellas', 1990, 2, '/uploads/goodfellas.png', 8.7, 3900, 'A true story of mob life in New York.');
+
+
+-- Genrer
+INSERT INTO genres (name) VALUES
+('Action'),
+('Comedy'),
+('Drama'),
+('Horror'),
+('Thriller');
+
+-- Skådespelare
+INSERT INTO actors (name, birthYear) VALUES
+('Leonardo DiCaprio', 1974),
+('Robert De Niro', 1943),
+('Harrison Ford', 1942),
+('Brad Pitt', 1963);
+
+-- Koppla filmer till genrer
+INSERT INTO movieGenres (movieId, genreId) VALUES
+(1, 1),  -- Inception - Action
+(1, 3),  -- Inception - Drama
+(2, 3),  -- Goodfellas - Drama
+(3, 1),  -- Raiders - Action
+(4, 1),  -- Basterds - Action
+(4, 3),  -- Basterds - Drama
+(5, 5);  -- Dark Knight - Thriller
+
+-- Koppla filmer till skådespelare
+INSERT INTO movieActors (movieId, actorId) VALUES
+(1, 1),  -- Inception - Leonardo DiCaprio
+(2, 2),  -- Goodfellas - Robert De Niro
+(3, 3),  -- Raiders - Harrison Ford
+(4, 4),  -- Basterds - Brad Pitt
+(5, 1);  -- Dark Knight - Leonardo DiCaprio
+
+-- Förhandsgranskning – visa sammanställning
+
+ SELECT
+    m.id AS movieId,
+    m.title,
+    m.releaseYear,
+    m.imageUrl,
+    m.description,
+    m.rating,
+    m.views,
+    d.id AS directorId,
+    d.name AS directorName,
+    d.birthYear AS directorBirthYear,  -- Lägg till födelseår för regissören
+    GROUP_CONCAT(DISTINCT g.name) AS genres,
+    GROUP_CONCAT(DISTINCT a.name) AS actors,
+    GROUP_CONCAT(DISTINCT a.birthYear) AS actorsBirthYear  -- Lägg till födelseår för skådespelarna
+FROM movies m
+LEFT JOIN directors d ON m.directorId = d.id
+LEFT JOIN movieGenres mg ON m.id = mg.movieId
 LEFT JOIN genres g ON mg.genreId = g.id
+LEFT JOIN movieActors ma ON m.id = ma.movieId
+LEFT JOIN actors a ON ma.actorId = a.id
+GROUP BY m.id, d.id;
+
+
+-- Kontrollera tabellerna
+SELECT * FROM movies;
+SELECT * FROM directors;
+SELECT * FROM genres;
+SELECT * FROM actors;
+SELECT * FROM movieGenres;
+SELECT * FROM movieActors;
+
+ALTER TABLE movies ADD UNIQUE(title, releaseYear);
+
+
 LEFT JOIN movieActors ma ON m.id = ma.movieId
 LEFT JOIN actors a ON ma.actorId = a.id
 GROUP BY m.id, m.title, m.releaseYear, d.name;

@@ -1,45 +1,44 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { getAllMovies } from "@/api/api";
-import { RouterLink } from "vue-router";
 
 const movies = ref([]);
 const isLoading = ref(true);
 const error = ref(null);
 
-const getImageUrl = (path) => {
-    return path ? `http://localhost:3000${path}` : "";
+// Funktion för att normalisera array eller string
+const normalizeArray = (input) => {
+  if (Array.isArray(input)) return input;
+  if (typeof input === "string") return input.split(",").map((v) => v.trim());
+  return [];
 };
 
-// Hämta alla filmer när komponenten laddats
-onMounted(async () => {
-    try {
-        const response = await getAllMovies();
-        movies.value = response.data.map((movie) => ({
-            ...movie,
-            genres: Array.isArray(movie.genres)
-                ? movie.genres
-                : typeof movie.genres === "string"
-                ? movie.genres.split(",").map((g) => g.trim())
-                : [],
-            actors: Array.isArray(movie.actors)
-                ? movie.actors
-                : typeof movie.actors === "string"
-                ? movie.actors.split(",").map((a) => a.trim())
-                : [],
-            actorsBirthYear: Array.isArray(movie.actorsBirthYear)
-                ? movie.actorsBirthYear
-                : typeof movie.actorsBirthYear === "string"
-                ? movie.actorsBirthYear.split(",").map((y) => y.trim())
-                : [],
-        }));
-    } catch (err) {
-        error.value = err.message || "Failed to fetch movies";
-    } finally {
-        isLoading.value = false;
-    }
-});
+// Sökväg till bild
+const getImageUrl = (path) => {
+  return path ? `http://localhost:3000${path}` : "";
+};
+
+// 🔁 Hämta alla filmer
+const fetchMovies = async () => {
+  isLoading.value = true;
+  try {
+    const response = await getAllMovies();
+    movies.value = response.data.map((movie) => ({
+      ...movie,
+      genres: normalizeArray(movie.genres),
+      actors: normalizeArray(movie.actors),
+      actorsBirthYear: normalizeArray(movie.actorsBirthYear)
+    }));
+  } catch (err) {
+    error.value = err?.response?.data?.error || err.message || "Något gick fel vid hämtning av filmer";
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+onMounted(fetchMovies);
 </script>
+
 
 <template>
     <div class="movies-container">

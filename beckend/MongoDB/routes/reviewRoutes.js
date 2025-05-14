@@ -1,20 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const reviewController = require('../controllers/reviewController');
+const { verifyToken } = require('../middleware/authMiddleware');
 
-// POST
-router.post('/', reviewController.createReview);
+// Hämta recensioner för en viss användare
+router.get('/user/:userId', verifyToken, reviewController.getReviewsByUserId);
 
-// GET
-router.get('/', reviewController.getAllReviews);
+// Hämta recensioner för en viss film (via path-param)
+router.get('/movie/:movieId', reviewController.getReviewsByMovie);
 
-// GET  by id
+// Hämta recensioner via query (?movieId=...)
+router.get('/', reviewController.getReviewsByMovie); // Publikt
+
+// Skapa en ny recension
+router.post('/', verifyToken, reviewController.createReview);
+
+// Hämta en specifik recension via ID
 router.get('/:id', reviewController.getReviewById);
 
-// PUT
-router.put('/:id', reviewController.updateReview);
+// Uppdatera recension
+router.put('/:id', verifyToken, reviewController.updateReview);
 
-// DELETE
-router.delete('/:id', reviewController.deleteReview);
+// Radera recension
+router.delete('/:id', verifyToken, reviewController.deleteReview);
 
 module.exports = router;

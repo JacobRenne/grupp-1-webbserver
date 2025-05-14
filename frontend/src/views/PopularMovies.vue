@@ -3,17 +3,22 @@ import { ref, onMounted } from "vue";
 import { getPopularMovies } from "@/api/api";
 
 const popularMovies = ref([]);
+const isLoading = ref(true);
+const error = ref(null);
+
+const getImageUrl = (path) => {
+  return path ? `http://localhost:3000${path}` : "";
+};
 
 onMounted(async () => {
   try {
     const res = await getPopularMovies();
 
-    // Se till att konvertera birthYear-data
     popularMovies.value = res.data.map((movie) => {
       const actors = Array.isArray(movie.actors)
         ? movie.actors
         : typeof movie.actors === "string"
-        ? movie.actors.split(",")
+        ? movie.actors.split(",").map((a) => a.trim())
         : [];
 
       const actorsBirthYear = Array.isArray(movie.actorsBirthYear)
@@ -25,7 +30,7 @@ onMounted(async () => {
       const genres = Array.isArray(movie.genres)
         ? movie.genres
         : typeof movie.genres === "string"
-        ? movie.genres.split(",")
+        ? movie.genres.split(",").map((g) => g.trim())
         : [];
 
       return {
@@ -36,14 +41,13 @@ onMounted(async () => {
       };
     });
   } catch (err) {
-    console.error("Could not fetch popular movies:", err);
+    error.value = err?.message || "Kunde inte hämta populära filmer";
+  } finally {
+    isLoading.value = false;
   }
 });
-
-const getImageUrl = (path) => {
-  return path ? `http://localhost:3000${path}` : "";
-};
 </script>
+
 
 <template>
   <div class="page-container">

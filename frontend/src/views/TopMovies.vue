@@ -3,40 +3,8 @@ import { ref, onMounted } from "vue";
 import { getTopMovies } from "@/api/api";
 
 const topMovies = ref([]);
-
-onMounted(async () => {
-  try {
-    const res = await getTopMovies();
-    topMovies.value = res.data.map((movie) => {
-      const actors = Array.isArray(movie.actors)
-        ? movie.actors
-        : typeof movie.actors === "string"
-        ? movie.actors.split(",")
-        : [];
-
-      const actorsBirthYear = Array.isArray(movie.actorsBirthYear)
-        ? movie.actorsBirthYear
-        : typeof movie.actorsBirthYear === "string"
-        ? movie.actorsBirthYear.split(",").map((year) => year.trim())
-        : [];
-
-      const genres = Array.isArray(movie.genres)
-        ? movie.genres
-        : typeof movie.genres === "string"
-        ? movie.genres.split(",")
-        : [];
-
-      return {
-        ...movie,
-        actors,
-        actorsBirthYear,
-        genres,
-      };
-    });
-  } catch (err) {
-    console.error("Could not fetch top movies:", err);
-  }
-});
+const isLoading = ref(true);
+const error = ref(null);
 
 const getImageUrl = (path) => {
   return path ? `http://localhost:3000${path}` : '';
@@ -54,7 +22,20 @@ const getStarRating = (rating) => {
     '☆'.repeat(Math.max(0, emptyStars))
   );
 };
+
+// Ladda filmer
+onMounted(async () => {
+  try {
+    const res = await getTopMovies();
+    topMovies.value = res.data;
+  } catch (err) {
+    error.value = err?.response?.data?.error || err.message || 'Kunde inte hämta topplistan';
+  } finally {
+    isLoading.value = false;
+  }
+});
 </script>
+
 
 <template>
   <div class="page-container">
@@ -74,28 +55,23 @@ const getStarRating = (rating) => {
           </div>
         </div>
         <h3>{{ movie.title }} ({{ movie.releaseYear }})</h3>
-
-        <p><strong>Genres:</strong> {{ movie.genres?.join(', ') || 'N/A' }}</p>
-
-        <p>
-          <strong>Director:</strong>
-          {{ movie.directorName }}
+        <p><strong>Genres:</strong> {{ movie.genres.join(', ') }}</p>
+        <p><strong>Director:</strong> 
+          {{ movie.directorName }} 
           <span v-if="movie.directorBirthYear">({{ movie.directorBirthYear }})</span>
         </p>
-
-        <p>
-          <strong>Actors:</strong>
-          <span v-if="movie.actors && movie.actors.length">
+        <p><strong>Actors:</strong>
+          <span v-if="movie.actors.length">
             <span v-for="(actor, index) in movie.actors" :key="index">
-              {{ actor }} ({{ movie.actorsBirthYear?.[index] || "okänt" }})<span
-                v-if="index < movie.actors.length - 1"
-                >, </span
-              >
+              {{ actor }}
+              <span v-if="movie.actorsBirthYear && movie.actorsBirthYear[index]">
+                ({{ movie.actorsBirthYear[index] }})
+              </span>
+              <span v-if="index < movie.actors.length - 1">, </span>
             </span>
           </span>
           <span v-else>N/A</span>
         </p>
-
         <p><strong>Description:</strong> {{ movie.description }}</p>
       </div>
     </div>
@@ -115,7 +91,6 @@ const getStarRating = (rating) => {
 h1 {
   color: #ffffff;
   margin-bottom: 30px;
-  text-align: left;
 }
 
 .movie-grid {
@@ -125,6 +100,7 @@ h1 {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   justify-content: center;
   gap: 24px;
+  margin-top: 20px;
 }
 
 .movie-card {
@@ -172,9 +148,9 @@ h1 {
 .movie-image {
   width: 100%;
   height: auto;
-  border-radius: 8px 8px 0 0;
   object-fit: cover;
   margin-bottom: 12px;
+  border-radius: 8px 8px 0 0;
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 
@@ -195,14 +171,9 @@ p {
   font-size: 14px;
 }
 
-
 @media (max-width: 599px) {
   .page-container {
     padding: 0 16px;
-  }
-
-  h1, h3 {
-    text-align: center;
   }
 
   .movie-grid {
@@ -210,19 +181,8 @@ p {
     gap: 16px;
   }
 
-  .rating-badge {
-    font-size: 12px;
-    padding: 3px 6px;
-    top: 6px;
-    right: 6px;
-  }
-
-  .stars {
-    font-size: 12px;
-  }
-
-  .number {
-    font-size: 12px;
+  h1, h3 {
+    text-align: center;
   }
 }
 
@@ -244,4 +204,3 @@ p {
   }
 }
 </style>
-

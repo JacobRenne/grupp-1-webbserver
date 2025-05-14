@@ -8,6 +8,10 @@ const movieController = require('../controllers/movieController');
 router.get('/top', movieController.getTopMovies);
 router.get('/popular', movieController.getPopularMovies);
 
+// Sökfilmer via titel
+router.get('/search', movieController.searchMovies); 
+
+
 // Hämta alla filmer
 router.get('/', movieController.getAllMovies);
 

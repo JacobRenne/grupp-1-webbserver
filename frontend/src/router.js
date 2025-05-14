@@ -6,20 +6,25 @@ import profileView from './views/profile.vue';
 import topMoviesView from './views/TopMovies.vue';
 import popularMoviesView from './views/PopularMovies.vue';
 import allMovies from './views/allMovies.vue';
-import createAccount from './views/createAccount.vue';
-import EditMovieView from '@/views/EditMovieView.vue';
+import EditMovieView from './views/EditMovieView.vue';
 
+// 🔹 NYA SEPARATA VIEWS
+import LoginView from './views/LoginView.vue';
+import SignupView from './views/SignupView.vue';
 
 export default createRouter({
   history: createWebHistory('/'),
   routes: [
-    { component: homeView, path: '/' },
-    { component: singleMovieView, path: '/movie/:id' },
-    { component: profileView, path: '/user/:id' },
-    { component: topMoviesView, path: '/top-movies' },
-    { component: popularMoviesView, path: '/popular-movies' },
-    { component: allMovies, path: '/movie'},
-    { component: createAccount, path: '/createAccount'},
-	  { component: EditMovieView, path: '/edit/:id', }
+    { path: '/', component: homeView },
+    { path: '/movie', component: allMovies },
+    { path: '/movie/:id', component: singleMovieView },
+    { path: '/top-movies', component: topMoviesView },
+    { path: '/popular-movies', component: popularMoviesView },
+    { path: '/user/:id', component: profileView },
+    { path: '/edit/:id', component: EditMovieView },
+
+    // 🔹 Separata auth-vyer
+    { path: '/login', component: LoginView },
+    { path: '/signup', component: SignupView }
   ]
 });

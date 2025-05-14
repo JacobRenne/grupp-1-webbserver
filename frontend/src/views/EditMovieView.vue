@@ -77,7 +77,7 @@ const findOrCreate = async (name, birthYear, getAllFn, createFn) => {
   return res.data;
 };
 
-// 🟢 HÄR ligger din updatedMovie.value = {...} kod
+// HÄR ligger din updatedMovie.value = {...} kod
 const loadMovie = async () => {
   const all = await getAllMovies();
   const found = all.data.find(m => m.movieId === movieId);

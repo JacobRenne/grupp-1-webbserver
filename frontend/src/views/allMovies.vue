@@ -140,7 +140,6 @@ a {
 }
 
 .movie-list {
-    max-width: 1000px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

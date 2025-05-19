@@ -60,7 +60,7 @@ onMounted(fetchMovies);
                         <ul>
                             <li>
                                 <h2>
-                                    {{ movie.title }} ,
+                                    {{ movie.title }} <br>
                                     <em>{{ movie.releaseYear }}</em>
                                 </h2>
                             </li>

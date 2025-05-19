@@ -170,15 +170,67 @@ exports.getMovieById = async (req, res) => {
     }
   };
   
-  exports.getTopMovies = async (req, res) => {
-    try {
-      const allReviews = await Review.find();
-  
-      const reviewMap = {};
-      allReviews.forEach((r) => {
-        const id = r.movieId.toString();
-        if (!reviewMap[id]) reviewMap[id] = [];
-        reviewMap[id].push(r.rating);
+exports.getTopMovies = async (req, res) => {
+  try {
+    const allReviews = await Review.find();
+
+    const reviewMap = {};
+    allReviews.forEach((r) => {
+      const id = r.movieId.toString();
+      if (!reviewMap[id]) reviewMap[id] = [];
+      reviewMap[id].push(r.rating);
+    });
+
+    const sql = `
+      SELECT 
+        m.id AS movieId,
+        m.title,
+        m.releaseYear,
+        m.imageUrl,
+        m.rating as sqlRating,
+        m.description,
+        d.id AS directorId,
+        d.name AS directorName,
+        d.birthYear AS directorBirthYear,
+        GROUP_CONCAT(DISTINCT g.name) AS genres,
+        GROUP_CONCAT(DISTINCT a.name) AS actors,
+        GROUP_CONCAT(DISTINCT a.birthYear) AS actorsBirthYear
+      FROM movies m
+      LEFT JOIN directors d ON m.directorId = d.id
+      LEFT JOIN movieGenres mg ON m.id = mg.movieId
+      LEFT JOIN genres g ON mg.genreId = g.id
+      LEFT JOIN movieActors ma ON m.id = ma.movieId
+      LEFT JOIN actors a ON ma.actorId = a.id
+      GROUP BY m.id, d.id, m.description
+    `;
+
+    const results = await query(sql);
+
+    const allMovies = results
+      .filter((movie) => movie.imageUrl) // Behåll bara de med bild
+      .map((movie) => {
+        const movieId = movie.movieId.toString();
+        const ratings = reviewMap[movieId] || [];
+        const average = ratings.length
+          ? ratings.reduce((sum, r) => sum + r, 0) / ratings.length
+          : 0;
+
+        return {
+          movieId: movie.movieId,
+          title: movie.title,
+          releaseYear: movie.releaseYear,
+          imageUrl: movie.imageUrl,
+          description: movie.description,
+          sqlRating: movie.sqlRating,
+          rating: average,
+          votes: ratings.length,
+          directorId: movie.directorId,
+          directorName: movie.directorName,
+          directorBirthYear: movie.directorBirthYear,
+          genres: movie.genres ? movie.genres.split(',') : [],
+          actors: movie.actors ? movie.actors.split(',') : [],
+          actorsBirthYear: movie.actorsBirthYear ? movie.actorsBirthYear.split(',') : [],
+        };
       });
   
       const sql = `
@@ -239,7 +291,6 @@ exports.getMovieById = async (req, res) => {
       res.status(500).json({ error: "Failed to fetch top rated movies" });
     }
   };
-  
 
 // Hämta filmer med flest visningar
 exports.getPopularMovies = async (req, res) => {
@@ -262,6 +313,7 @@ exports.getPopularMovies = async (req, res) => {
         m.title,
         m.releaseYear,
         m.imageUrl,
+        m.views AS sqlViews,
         m.description,
         d.id AS directorId,
         d.name AS directorName,
@@ -275,7 +327,7 @@ exports.getPopularMovies = async (req, res) => {
       LEFT JOIN genres g ON mg.genreId = g.id
       LEFT JOIN movieActors ma ON m.id = ma.movieId
       LEFT JOIN actors a ON ma.actorId = a.id
-      GROUP BY m.id, d.id, m.description
+      GROUP BY m.id, d.id, m.description, m.views
     `;
 
     const results = await query(sql);
@@ -286,6 +338,7 @@ exports.getPopularMovies = async (req, res) => {
       return {
         ...movie,
         views,
+        sqlViews: movie.sqlViews,
         genres: movie.genres ? movie.genres.split(',') : [],
         actors: movie.actors ? movie.actors.split(',') : [],
         actorsBirthYear: movie.actorsBirthYear ? movie.actorsBirthYear.split(',') : []

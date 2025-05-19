@@ -42,37 +42,39 @@ onMounted(async () => {
     <h1>Top Movies</h1>
     <div class="movie-grid">
       <div class="movie-card" v-for="movie in topMovies" :key="movie.movieId">
-        <div class="image-wrapper">
-          <img
-            v-if="movie.imageUrl"
-            :src="getImageUrl(movie.imageUrl)"
-            alt="Movie image"
-            class="movie-image"
-          />
-          <div class="rating-badge">
-            <span class="stars" v-text="getStarRating(movie.rating)"></span>
-            <span class="number">({{ movie.rating.toFixed(1) }})</span>
+        <router-link :to="`/movie/${movie.movieId}`">
+          <div class="image-wrapper">
+            <img
+              v-if="movie.imageUrl"
+              :src="getImageUrl(movie.imageUrl)"
+              alt="Movie image"
+              class="movie-image"
+            />
+            <div class="rating-badge">
+              <span class="stars" v-text="getStarRating(movie.sqlRating)"></span>
+              <span class="number">({{ movie.sqlRating.toFixed(1) }})</span>
+            </div>
           </div>
-        </div>
-        <h3>{{ movie.title }} ({{ movie.releaseYear }})</h3>
-        <p><strong>Genres:</strong> {{ movie.genres.join(', ') }}</p>
-        <p><strong>Director:</strong> 
-          {{ movie.directorName }} 
-          <span v-if="movie.directorBirthYear">({{ movie.directorBirthYear }})</span>
-        </p>
-        <p><strong>Actors:</strong>
-          <span v-if="movie.actors.length">
-            <span v-for="(actor, index) in movie.actors" :key="index">
-              {{ actor }}
-              <span v-if="movie.actorsBirthYear && movie.actorsBirthYear[index]">
-                ({{ movie.actorsBirthYear[index] }})
+          <h3>{{ movie.title }} ({{ movie.releaseYear }})</h3>
+          <p><strong>Genres:</strong> {{ movie.genres.join(', ') }}</p>
+          <p><strong>Director:</strong> 
+            {{ movie.directorName }} 
+            <span v-if="movie.directorBirthYear">({{ movie.directorBirthYear }})</span>
+          </p>
+          <p><strong>Actors:</strong>
+            <span v-if="movie.actors.length">
+              <span v-for="(actor, index) in movie.actors" :key="index">
+                {{ actor }}
+                <span v-if="movie.actorsBirthYear && movie.actorsBirthYear[index]">
+                  ({{ movie.actorsBirthYear[index] }})
+                </span>
+                <span v-if="index < movie.actors.length - 1">, </span>
               </span>
-              <span v-if="index < movie.actors.length - 1">, </span>
             </span>
-          </span>
-          <span v-else>N/A</span>
-        </p>
-        <p><strong>Description:</strong> {{ movie.description }}</p>
+            <span v-else>N/A</span>
+          </p>
+          <p><strong>Description:</strong> {{ movie.description }}</p>
+        </router-link>
       </div>
     </div>
   </div>
@@ -112,6 +114,11 @@ h1 {
   text-align: left;
   padding: 16px;
   transition: transform 0.3s ease;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
 }
 
 .image-wrapper {

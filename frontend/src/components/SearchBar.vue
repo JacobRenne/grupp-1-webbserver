@@ -24,7 +24,7 @@ watch(query, async (newQuery) => {
       console.error('Search failed:', err);
       results.value = [];
     }
-  }, 300); // debounce 300ms
+  }, 300);
 });
 
 const goToMovie = (id) => {

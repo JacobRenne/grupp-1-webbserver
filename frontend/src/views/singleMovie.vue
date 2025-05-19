@@ -25,10 +25,10 @@ onMounted(() => {
   }
 });
 
-// ✅ Fix: computed user (för template)
+// computed user (för template)
 const currentUser = computed(() => user.value);
 
-// Trailer-länkar
+// Trailer länkar
 const trailers = computed(() => {
   if (!movie.value) return [];
   switch (movie.value.title) {

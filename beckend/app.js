@@ -6,7 +6,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// === Middleware ===
+// Middleware
 
 // Tillåt endast din frontend i utveckling
 app.use(cors({
@@ -26,7 +26,7 @@ app.use(fileUpload({
 // Gör alla uploads publikt tillgängliga (avatars, bilder, etc.)
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
-// === MySQL Routes (filmer etc.)
+// MySQL Routes (filmer etc.)
 const movieRoutes = require('./mysql/routes/movieRoutes');
 const genreRoutes = require('./mysql/routes/genreRoutes');
 const actorRoutes = require('./mysql/routes/actorRoutes');
@@ -39,7 +39,7 @@ app.use('/api/actors', actorRoutes);
 app.use('/api/directors', directorRoutes);
 app.use('/api/relations', relationRoutes);
 
-// === MongoDB Routes (användare, recensioner, visningar)
+// MongoDB Routes (användare, recensioner, visningar)
 const connectMongoDB = require('./MongoDB/connectionMongoDB');
 const reviewRoutes = require('./MongoDB/routes/reviewRoutes');
 const userRoutes = require('./MongoDB/routes/userRoutes');
@@ -56,18 +56,18 @@ app.use('/api/users', userRoutes);
 app.use('/api/login', loginRoutes);
 app.use('/api/views', viewRoutes);
 
-// === 404 fallback för okända endpoints
+// 404 fallback för okända endpoints
 app.use((req, res, next) => {
   res.status(404).json({ error: 'Endpoint not found' });
 });
 
-// === Global felhantering
+// Global felhantering
 app.use((err, req, res, next) => {
   console.error('❗ Global error:', err.stack);
   res.status(500).json({ error: 'Internal server error' });
 });
 
-// === Starta servern ===
+// Starta servern ===
 app.listen(PORT, () => {
   console.log(`🚀 Server is running at http://localhost:${PORT}`);
 });

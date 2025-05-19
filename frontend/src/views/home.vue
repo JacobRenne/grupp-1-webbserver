@@ -95,22 +95,21 @@ const addMovie = async () => {
       return;
     }
 
-    if (!title) {
-      alert('Titel är obligatorisk');
+    if (!title || isNaN(releaseYear) || releaseYear < 1900 || releaseYear > currentYear) {
+      alert(`Titel och giltigt utgivningsår krävs (1900–${currentYear})`);
       return;
     }
-    if (isNaN(releaseYear) || releaseYear < 1900 || releaseYear > currentYear) {
-      alert(`Utgivningsår måste vara ett nummer mellan 1900 och ${currentYear}`);
-      return;
-    }
+
     if (!directorName || isNaN(directorYear) || directorYear < 1900 || directorYear > currentYear) {
       alert(`Regissörens namn och födelseår krävs (1900–${currentYear})`);
       return;
     }
+
     if (!actorName || isNaN(actorYear) || actorYear < 1900 || actorYear > currentYear) {
       alert(`Skådespelarens namn och födelseår krävs (1900–${currentYear})`);
       return;
     }
+
     if (!genreName) {
       alert('Genre är obligatorisk');
       return;
@@ -122,18 +121,19 @@ const addMovie = async () => {
 
     const formData = new FormData();
     formData.append('title', title);
-    formData.append('releaseYear', releaseYear);
-    formData.append('directorId', directorRes.data.id);
+    formData.append('releaseYear', String(releaseYear));
     formData.append('description', description);
+    formData.append('directorName', directorName);
+    formData.append('directorBirthYear', String(directorYear));
+    formData.append('actorName', actorName);
+    formData.append('actorBirthYear', String(actorYear));
+    formData.append('genreName', genreName);
     if (newMovie.value.image) {
       formData.append('image', newMovie.value.image);
     }
 
     const movieRes = await createMovie(formData);
-    const movieId = movieRes.data.id;
-
-    await addMovieActor({ movieId, actorId: actorRes.data.id });
-    await addMovieGenre({ movieId, genreId: genreRes.data.id });
+    console.log('✅ Film skapad:', movieRes.data);
 
     newMovie.value = {
       title: '',
@@ -149,6 +149,7 @@ const addMovie = async () => {
     selectedFileName.value = 'Ingen fil är vald';
 
     await fetchAll();
+    alert('Filmen har skapats!');
   } catch (error) {
     console.error('Error creating movie with relations:', error);
     if (error.response?.status === 409) {

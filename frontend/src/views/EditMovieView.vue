@@ -7,10 +7,6 @@ import {
   createActor,
   createDirector,
   createGenre,
-  addMovieActor,
-  addMovieGenre,
-  deleteMovieActor,
-  deleteMovieGenre,
   getAllActors,
   getAllDirectors,
   getAllGenres
@@ -77,7 +73,6 @@ const findOrCreate = async (name, birthYear, getAllFn, createFn) => {
   return res.data;
 };
 
-// HÄR ligger din updatedMovie.value = {...} kod
 const loadMovie = async () => {
   const all = await getAllMovies();
   const found = all.data.find(m => m.movieId === movieId);
@@ -135,9 +130,10 @@ const saveMovie = async () => {
     formData.append('releaseYear', updatedMovie.value.year);
     formData.append('description', updatedMovie.value.description);
     formData.append('directorId', director.id);
-    formData.append('directorBirthYear', director.birthYear); // 🟢 skickas till backend
-    formData.append('actorId', actor.id);                     // 🟢
-    formData.append('actorBirthYear', actor.birthYear);       // 🟢
+    formData.append('directorBirthYear', director.birthYear);
+    formData.append('actorId', actor.id);
+    formData.append('actorBirthYear', actor.birthYear);
+    formData.append('genreId', genre.id);
     if (updatedMovie.value.image) {
       formData.append('image', updatedMovie.value.image);
     }
@@ -149,6 +145,7 @@ const saveMovie = async () => {
       return;
     }
 
+    alert('Movie updated successfully!');
     router.push('/');
   } catch (error) {
     console.error('Error saving movie:', error);
@@ -166,6 +163,7 @@ const cancelEdit = () => {
 
 onMounted(loadMovie);
 </script>
+
 
 
 <template>

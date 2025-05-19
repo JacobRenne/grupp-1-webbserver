@@ -18,7 +18,7 @@ const getImageUrl = (path) => {
   return path ? `http://localhost:3000${path}` : "";
 };
 
-// 🔁 Hämta alla filmer
+// Hämta alla filmer
 const fetchMovies = async () => {
   isLoading.value = true;
   try {

@@ -1,4 +1,4 @@
-const db = require('./db'); // ändra till '../db' om du lägger filen utanför mysql/
+const db = require('./db');
 
 exports.query = (sql, params = []) => {
   return new Promise((resolve, reject) => {

@@ -8,7 +8,7 @@ import popularMoviesView from './views/PopularMovies.vue';
 import allMovies from './views/allMovies.vue';
 import EditMovieView from './views/EditMovieView.vue';
 
-// 🔹 NYA SEPARATA VIEWS
+// NYA SEPARATA VIEWS
 import LoginView from './views/LoginView.vue';
 import SignupView from './views/SignupView.vue';
 
@@ -23,7 +23,7 @@ export default createRouter({
     { path: '/user/:id', component: profileView },
     { path: '/edit/:id', component: EditMovieView },
 
-    // 🔹 Separata auth-vyer
+    // 🔹 Separata auth vyer
     { path: '/login', component: LoginView },
     { path: '/signup', component: SignupView }
   ]
